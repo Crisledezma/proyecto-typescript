@@ -8,24 +8,23 @@ import { LoadingButton } from '@mui/lab';
 import { useFirebaseAuth } from '../../contexts/FirebaseAuthContext';
 import { useNavigate } from "react-router-dom";
 
-interface LoginFormValues {
+interface SignupFormValues {
   email: string;
   password: string;
 }
 
-const LoginSchema = Yup.object().shape({
+const SignupSchema = Yup.object().shape({
   email: Yup.string().email('Correo inválido').required('Campo requerido').matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/),
   password: Yup.string().required('La contraseña es requerida').min(8, 'Mínimo 8 caracteres'),
 })
 
-export const LoginForm = () => {
-
-  const { login } = useFirebaseAuth();
-
+const SignupForm = () => {
+  const { signup } = useFirebaseAuth();
+  
   const navigate = useNavigate();
 
-  const onSubmit = async (values: LoginFormValues) => {
-    await login(values.email, values.password);
+  const onSubmit = async (values: SignupFormValues) => {
+    await signup(values.email, values.password);
     navigate('/');
   }
 
@@ -34,12 +33,12 @@ export const LoginForm = () => {
       className='mt-20% flex flex-col w-4/5 sm:w-1/2 lg:w-1/3 p-8 space-y-5 shadow-xl'
       style={{margin: '200px auto'}}
     >
-      <Formik<LoginFormValues>
+      <Formik<SignupFormValues>
         initialValues={{
           email: '',
           password: '',
         }}
-        validationSchema={LoginSchema}
+        validationSchema={SignupSchema}
         onSubmit={onSubmit}
         validateOnBlur
         validateOnChange
@@ -60,7 +59,7 @@ export const LoginForm = () => {
             className='flex flex-col items-center gap-5'
           >
             <Typography>
-              Bienvenido! Inicia sesión para continuar.
+              Por favor crea un usuario.
             </Typography>
             <TextInput
               id='email'
@@ -102,4 +101,4 @@ export const LoginForm = () => {
   )
 }
 
-export default LoginForm
+export default SignupForm

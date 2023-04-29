@@ -5,11 +5,20 @@ import "../../styles/listas.css";
 import { Button as MuiButton, TextField } from '@mui/material';
 import { Button as AntdButton } from 'antd';
 import styled from '@emotion/styled';
+import { useFirebaseAuth } from '../../contexts/FirebaseAuthContext';
+import { useNavigate } from "react-router-dom";
 
 export const ListaTodosContexts = () => {
 
   const { todos, loading, agregarTodo } = useEjemploContext();
   const [valor, setValor] = useState('');
+  const { logout } = useFirebaseAuth();
+  const navigate = useNavigate();
+
+  const handleLogout =  () => {
+    logout();
+    navigate('login');
+  }
 
   if(loading) return <p>Cargando...</p>;
 
@@ -57,6 +66,7 @@ export const ListaTodosContexts = () => {
       >
         Este es un botón ANTD
       </AntdButton>
+      <MuiButton type='button' onClick={handleLogout}>Cerrar sesión</MuiButton>
       <ul className='lista'>
         {todos.map((todo) => { 
           return <Todo key={todo.id} todo={todo} />
