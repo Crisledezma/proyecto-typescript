@@ -1,4 +1,3 @@
-import { IAlbum } from "../../models/IAlbum";
 import { IPost } from "../../models/IPost"
 import { Comentario } from '../atoms/Comentario';
 import { Album } from "./Album";
