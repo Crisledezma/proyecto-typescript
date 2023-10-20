@@ -20,22 +20,23 @@ export const ListaTodosContexts = () => {
     navigate('login');
   }
 
-  if(loading) return <p>Cargando...</p>;
+  if(loading) return (<p>Cargando...</p>);
 
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      const valor = e.currentTarget.value;
-      agregarTodo(e.currentTarget.value);
+    if (e.key === 'Enter' && valor) {
+      agregarTodo(valor);
       console.log(valor);
-      e.currentTarget.value = '';
+      setValor('');
     }
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement> | undefined) => {
-    setValor(event?.currentTarget.value as string);
-  };
+    if(event?.currentTarget){
+      setValor(event?.currentTarget.value as string);
+    }
+ };
 
-  const onClick = (e: React.MouseEvent) => {
+  const onClick = () => {
     if (valor) {
       agregarTodo(valor);
       setValor('');
@@ -83,5 +84,4 @@ const Container = styled.div<{ fondo: string }>`
 
 const StyledButton = styled(MuiButton)`
 background-color: #acb;
-color: blue;
-`;
+color: blue;`;
